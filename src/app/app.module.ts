@@ -7,24 +7,52 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
+import { AngularFireModule } from 'angularfire2';
+import { firebaseConfig } from '../environment';
+import {AngularFirestoreModule} from 'angularfire2/firestore'
+import {AngularFireAuthModule} from 'angularfire2/auth'
+import { LoginPage } from '../pages/login/login';
+import { UsuarioProvider } from '../providers/usuario/usuario';
+import { EsperaPage } from '../pages/espera/espera';
+import { ProduccionPage } from '../pages/produccion/produccion';
+import { EnPausaPage } from '../pages/en-pausa/en-pausa';
+import { FinalizadasPage } from '../pages/finalizadas/finalizadas';
+import { TareaProvider } from '../providers/tarea/tarea';
+
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    LoginPage,
+    EsperaPage,
+    ProduccionPage,
+    EnPausaPage,
+    FinalizadasPage
+    
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    LoginPage,
+    EsperaPage,
+    ProduccionPage,
+    EnPausaPage,
+    FinalizadasPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    UsuarioProvider,
+    TareaProvider
   ]
 })
 export class AppModule {}
