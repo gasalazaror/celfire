@@ -18,6 +18,8 @@ import { ProduccionPage } from '../pages/produccion/produccion';
 import { EnPausaPage } from '../pages/en-pausa/en-pausa';
 import { FinalizadasPage } from '../pages/finalizadas/finalizadas';
 import { TareaProvider } from '../providers/tarea/tarea';
+import { Geolocation } from '@ionic-native/geolocation';
+import { PausaPage } from '../pages/pausa/pausa';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { TareaProvider } from '../providers/tarea/tarea';
     EsperaPage,
     ProduccionPage,
     EnPausaPage,
-    FinalizadasPage
+    FinalizadasPage,
+    PausaPage,
     
   ],
   imports: [
@@ -45,14 +48,16 @@ import { TareaProvider } from '../providers/tarea/tarea';
     EsperaPage,
     ProduccionPage,
     EnPausaPage,
-    FinalizadasPage
+    FinalizadasPage,
+    PausaPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UsuarioProvider,
-    TareaProvider
+    TareaProvider,
+    Geolocation
   ]
 })
 export class AppModule {}

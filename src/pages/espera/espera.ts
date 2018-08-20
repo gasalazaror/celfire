@@ -20,17 +20,15 @@ export class EsperaPage {
   ordenes: Observable<any[]>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private ordenService: TareaProvider) {
-    this.obtenerOrdenes()
+
   }
 
 
   obtenerOrdenes() {
-    console.log('s')
     this.ordenes = this.ordenService.obtenerOrdenes();
     this.ordenes.forEach(element => {
-      console.log(element)
+    
     });
-
   }
 
   iniciarServicio(tarea, orden, id){
