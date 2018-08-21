@@ -18,12 +18,14 @@ import { TareaProvider } from '../../providers/tarea/tarea';
 export class EnPausaPage {
 
   ordenes: Observable<any[]>;
+  usuarioid:any
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
     private ordenService: TareaProvider,
     public alertCtrl: AlertController) {
+      this.usuarioid = localStorage.getItem('usuarioid')
     this.obtenerOrdenes()
   }
 

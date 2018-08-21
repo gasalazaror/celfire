@@ -19,6 +19,7 @@ import moment from 'moment';
 export class EsperaPage {
 
   ordenes: Observable<any[]>;
+  usuarioid: any
 
   constructor(
     public navCtrl: NavController,
@@ -27,19 +28,27 @@ export class EsperaPage {
     public alertCtrl: AlertController,
   ) {
 
-    var fecha1 = moment("2018-08-20 07:00:00", "YYYY-MM-DD HH:mm:ss");
-    var fecha2 = moment("2018-08-20 07:04:00", "YYYY-MM-DD HH:mm:ss");
+  
 
-    var diff = fecha2.diff(fecha1, 'd'); // Diff in days
-    console.log(diff);
+    // var fecha1 = moment("2018-08-20 07:00:00", "YYYY-MM-DD HH:mm:ss");
+    // var fecha2 = moment("2018-08-20 07:04:00", "YYYY-MM-DD HH:mm:ss");
 
-    var diff = fecha2.diff(fecha1, 's'); // Diff in hours
-    console.log(diff)
+    // var diff = fecha2.diff(fecha1, 'd'); // Diff in days
+    // console.log(diff);
+
+    // var diff = fecha2.diff(fecha1, 's'); // Diff in hours
+    // console.log(diff)
 
 
-    const formatted = moment.utc(diff * 1000).format('HH:mm:ss');
+    // const formatted = moment.utc(diff * 1000).format('HH:mm:ss');
 
-    console.log(formatted)
+    // console.log(formatted)
+
+    this.usuarioid = localStorage.getItem('usuarioid')
+
+  
+
+
 
     this.obtenerOrdenes()
   }
@@ -48,6 +57,10 @@ export class EsperaPage {
   obtenerOrdenes() {
     if(localStorage.getItem('empresa')!=null){
       this.ordenes = this.ordenService.obtenerOrdenes();
+
+      this.ordenes.subscribe(res=>{
+        console.log(res)
+      })
     }
   
    

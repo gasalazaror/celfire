@@ -12,7 +12,7 @@
 
   <div *ngFor="let orden of ordenes | async">
     <div *ngFor="let tarea of orden.data.servicios; let i = index">
-      <ion-item *ngIf="tarea.estado=='POR FACTURAR'">
+      <ion-item *ngIf="tarea.estado=='POR FACTURAR' && tarea.operador.data.usuario == usuarioid">
         <h2>{{tarea.descripcion}}</h2>
         <p>
           <strong>Tiempo estandar:</strong> {{tarea.tiempoEstandar}} minutos</p>

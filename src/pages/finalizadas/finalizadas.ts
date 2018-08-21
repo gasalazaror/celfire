@@ -18,9 +18,11 @@ import { Observable } from 'rxjs';
 export class FinalizadasPage {
 
   ordenes: Observable<any[]>;
+  usuarioid:any
 
   constructor(public navCtrl: NavController, public navParams: NavParams,  private ordenService: TareaProvider,) {
- this.obtenerOrdenes()
+    this.usuarioid = localStorage.getItem('usuarioid')
+    this.obtenerOrdenes()
   }
 
   ionViewDidLoad() {

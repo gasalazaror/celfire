@@ -22,6 +22,8 @@ export class ProduccionPage {
 
   ordenes: Observable<any[]>;
 
+  usuarioid:any
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -30,6 +32,7 @@ export class ProduccionPage {
     public db: AngularFirestore,
     public alertCtrl: AlertController,
   ) {
+    this.usuarioid = localStorage.getItem('usuarioid')
     this.obtenerOrdenes()
   }
 

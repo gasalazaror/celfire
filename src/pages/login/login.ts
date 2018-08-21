@@ -22,6 +22,7 @@ export class LoginPage {
 
   item: Observable<any>;
   private itemDoc: AngularFirestoreDocument;
+  
 
   account: { correo: string, password: string } = {
     correo: 'gabrielsalazar@outlook.com',
@@ -36,7 +37,7 @@ export class LoginPage {
     public alertCtrl: AlertController,
     public afa: AngularFireAuth, public db: AngularFirestore
   ) {
-
+  
   }
 
   ionViewDidLoad() {
@@ -52,16 +53,16 @@ export class LoginPage {
     this.afa.auth.signInWithEmailAndPassword(this.account.correo, this.account.password)
       .then((usuario: any) => {
         this.itemDoc = this.db.doc('usuario/' + this.afa.auth.currentUser.uid);
-        this.item = this.itemDoc.snapshotChanges();
+        this.item = this.itemDoc.valueChanges();
         this.item.subscribe(usuario => {
           loader.dismiss();
-         
-          this.navCtrl.push(HomePage);
 
-          console.log(usuario)
-          
+          this.navCtrl.push(HomePage);
+      
+
 
           localStorage.setItem('usuario', usuario.nombre);
+          localStorage.setItem('usuarioid', usuario.id);
           localStorage.setItem('empresa', usuario.empresa.path);
           localStorage.setItem('isLoggedin', 'true');
 
@@ -84,7 +85,7 @@ export class LoginPage {
 
       })
 
-      loader.dismiss();
+    loader.dismiss();
   }
 
 }
