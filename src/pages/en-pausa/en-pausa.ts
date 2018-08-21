@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs';
 import { TareaProvider } from '../../providers/tarea/tarea';
 
@@ -19,7 +19,11 @@ export class EnPausaPage {
 
   ordenes: Observable<any[]>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private ordenService: TareaProvider) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private ordenService: TareaProvider,
+    public alertCtrl: AlertController) {
     this.obtenerOrdenes()
   }
 
@@ -32,19 +36,34 @@ export class EnPausaPage {
   }
 
   reanudarServicio(tarea, orden, indice){
-  
-   orden.data.servicios[indice].estado = 'EN PRODUCCIÓN'
-  
 
-    orden.data.servicios[indice].pausas.forEach(pausa => {
-    
-      if (pausa.id==orden.data.servicios[indice].pausaActual) {
-        pausa.horaFin = new Date()
-      }
+    const confirm = this.alertCtrl.create({
+      title: 'Reanudar tarea',
+      message: '¿Está seguro que desea reanudar la tarea seleccionada?',
+      buttons: [
+        {
+          text: 'Aceptar',
+          handler: () => {
+
+            orden.data.servicios[indice].estado = 'EN PRODUCCIÓN'
+            orden.data.servicios[indice].pausas.forEach(pausa => {
+              if (pausa.id==orden.data.servicios[indice].pausaActual) {
+                pausa.horaFin = new Date()
+              }
+            });
+          this.ordenService.modificarOrden(orden.id, {servicios :orden.data.servicios})
+          }
+        },
+        {
+          text: 'Cancelar',
+          handler: () => {
+
+          }
+        }
+      ]
     });
-
-  this.ordenService.modificarOrden(orden.id, {servicios :orden.data.servicios})
-    
+    confirm.present();
+  
   }
 
 

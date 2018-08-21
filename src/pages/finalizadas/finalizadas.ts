@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { TareaProvider } from '../../providers/tarea/tarea';
+import { Observable } from 'rxjs';
 
 /**
  * Generated class for the FinalizadasPage page.
@@ -15,11 +17,22 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class FinalizadasPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  ordenes: Observable<any[]>;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,  private ordenService: TareaProvider,) {
+ this.obtenerOrdenes()
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FinalizadasPage');
+  }
+
+  obtenerOrdenes() {
+    if(localStorage.getItem('empresa')!=null){
+      this.ordenes = this.ordenService.obtenerOrdenes();
+    }
+  
+   
   }
 
 }

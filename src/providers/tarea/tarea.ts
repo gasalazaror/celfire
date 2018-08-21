@@ -20,6 +20,7 @@ export class TareaProvider {
   }
 
   obtenerOrdenes() {
+    
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
     return this.empresa.collection('ordenes').snapshotChanges().pipe(
       map(actions => actions.map(a => {

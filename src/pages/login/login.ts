@@ -52,11 +52,13 @@ export class LoginPage {
     this.afa.auth.signInWithEmailAndPassword(this.account.correo, this.account.password)
       .then((usuario: any) => {
         this.itemDoc = this.db.doc('usuario/' + this.afa.auth.currentUser.uid);
-        this.item = this.itemDoc.valueChanges();
+        this.item = this.itemDoc.snapshotChanges();
         this.item.subscribe(usuario => {
           loader.dismiss();
          
           this.navCtrl.push(HomePage);
+
+          console.log(usuario)
           
 
           localStorage.setItem('usuario', usuario.nombre);

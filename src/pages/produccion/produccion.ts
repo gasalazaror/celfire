@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs';
 import { TareaProvider } from '../../providers/tarea/tarea';
 import { PausaPage } from '../pausa/pausa';
@@ -27,7 +27,8 @@ export class ProduccionPage {
     public navParams: NavParams,
     private ordenService: TareaProvider,
     public modalCtrl: ModalController,
-    public db: AngularFirestore
+    public db: AngularFirestore,
+    public alertCtrl: AlertController,
   ) {
     this.obtenerOrdenes()
   }
@@ -39,14 +40,36 @@ export class ProduccionPage {
   obtenerOrdenes() {
     this.ordenes = this.ordenService.obtenerOrdenes();
     this.ordenes.forEach(element => {
-     
+
     });
   }
 
   finalizarServicio(orden, tarea, indice) {
-    orden.data.servicios[indice].estado = 'POR FACTURAR'
-    orden.data.servicios[indice].horaFin = new Date();
-    this.ordenService.modificarOrden(orden.id, { servicios: orden.data.servicios })
+
+    const confirm = this.alertCtrl.create({
+      title: 'Finalizar tarea',
+      message: '¿Está seguro que desea finalizar la tarea seleccionada?',
+      buttons: [
+        {
+          text: 'Aceptar',
+          handler: () => {
+
+            orden.data.servicios[indice].estado = 'POR FACTURAR'
+            orden.data.servicios[indice].horaFin = new Date();
+            this.ordenService.modificarOrden(orden.id, { servicios: orden.data.servicios })
+          }
+        },
+        {
+          text: 'Cancelar',
+          handler: () => {
+
+          }
+        }
+      ]
+    });
+    confirm.present();
+
+
   }
 
   pausarServicio(orden, tarea, indice) {

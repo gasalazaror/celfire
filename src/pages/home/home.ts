@@ -4,6 +4,7 @@ import { EsperaPage } from '../espera/espera';
 import { ProduccionPage } from '../produccion/produccion';
 import { FinalizadasPage } from '../finalizadas/finalizadas';
 import { EnPausaPage } from '../en-pausa/en-pausa';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home',
@@ -24,7 +25,10 @@ export class HomePage {
   tab4Title = "En pausa"
 
   constructor(public navCtrl: NavController) {
-
+    console.log(localStorage.getItem('empresa'))
+    if (localStorage.getItem('empresa')==null) {
+      this.navCtrl.push(LoginPage);
+     }
   }
 
 }

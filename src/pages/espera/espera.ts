@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs';
 import { TareaProvider } from '../../providers/tarea/tarea';
 import moment from 'moment';
@@ -23,7 +23,8 @@ export class EsperaPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private ordenService: TareaProvider
+    private ordenService: TareaProvider,
+    public alertCtrl: AlertController,
   ) {
 
     var fecha1 = moment("2018-08-20 07:00:00", "YYYY-MM-DD HH:mm:ss");
@@ -34,7 +35,7 @@ export class EsperaPage {
 
     var diff = fecha2.diff(fecha1, 's'); // Diff in hours
     console.log(diff)
- 
+
 
     const formatted = moment.utc(diff * 1000).format('HH:mm:ss');
 
@@ -45,17 +46,46 @@ export class EsperaPage {
 
 
   obtenerOrdenes() {
-    this.ordenes = this.ordenService.obtenerOrdenes();
-    this.ordenes.forEach(element => {
-
-    });
+    if(localStorage.getItem('empresa')!=null){
+      this.ordenes = this.ordenService.obtenerOrdenes();
+    }
+  
+   
   }
 
   iniciarServicio(tarea, orden, id) {
-    orden.data.servicios[id].estado = 'EN PRODUCCIÓN'
-    orden.data.servicios[id].horaInicio = new Date()
 
-    this.ordenService.modificarOrden(orden.id, { servicios: orden.data.servicios })
+    const confirm = this.alertCtrl.create({
+      title: 'Iniciar tarea',
+      message: '¿Está seguro que desea iniciar la tarea seleccionada?',
+      buttons: [
+        {
+          text: 'Aceptar',
+          handler: () => {
+            orden.data.servicios[id].estado = 'EN PRODUCCIÓN'
+            orden.data.servicios[id].horaInicio = new Date()
+            this.ordenService.modificarOrden(orden.id, { servicios: orden.data.servicios })
+          }
+        },
+        {
+          text: 'Cancelar',
+          handler: () => {
+
+          }
+        }
+      ]
+    });
+    confirm.present();
+
+
+
   }
+
+  iniciarServisdcio(servicio) {
+
+  }
+
+
+
 
 }
