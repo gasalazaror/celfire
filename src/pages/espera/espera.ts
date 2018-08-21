@@ -45,11 +45,6 @@ export class EsperaPage {
     // console.log(formatted)
 
     this.usuarioid = localStorage.getItem('usuarioid')
-
-  
-
-
-
     this.obtenerOrdenes()
   }
 
@@ -62,8 +57,6 @@ export class EsperaPage {
         console.log(res)
       })
     }
-  
-   
   }
 
   iniciarServicio(tarea, orden, id) {

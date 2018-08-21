@@ -25,8 +25,8 @@ export class LoginPage {
   
 
   account: { correo: string, password: string } = {
-    correo: 'gabrielsalazar@outlook.com',
-    password: '123456'
+    correo: '',
+    password: ''
   };
 
   constructor(
