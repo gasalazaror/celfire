@@ -32,9 +32,23 @@ export class EnPausaPage {
 
   obtenerOrdenes() {
     this.ordenes = this.ordenService.obtenerOrdenes();
-    this.ordenes.forEach(element => {
-   
-    });
+    this.ordenes.subscribe(res=>{
+      res.forEach(element => {
+        element.data.servicios.forEach(servicio => {
+     
+          if(servicio.pausas){
+            servicio.pausas.forEach(pausa => {
+              if (servicio.pausaActual == pausa.id) {
+                servicio.motivo = pausa.motivo.motivo
+              }
+            });
+          }
+        });
+      });
+
+    })
+
+
   }
 
   reanudarServicio(tarea, orden, indice){
